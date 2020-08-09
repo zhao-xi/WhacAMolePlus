@@ -6602,7 +6602,7 @@ MonoBehaviour:
   redMaterial: {fileID: 2100000, guid: 5d26ea785c2994a3c8b668f7f8c276bc, type: 2}
   getReadyTime: 3
   spawnInterval: 1
-  redMoleNum: 5
+  redMoleNum: 8
   totalMoleNum: 100
 --- !u!1 &505451099
 GameObject:
