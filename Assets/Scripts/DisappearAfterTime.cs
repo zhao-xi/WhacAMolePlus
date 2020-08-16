@@ -4,10 +4,31 @@ using UnityEngine;
 
 public class DisappearAfterTime : MonoBehaviour
 {
-    [SerializeField] private float life = 2f;
-    // Start is called before the first frame update
-    void Awake()
+    public float life = 5f;
+    public GameObject gameController;
+    public float fullLife;
+
+    private void Start()
     {
-        Destroy(gameObject, life);
+        fullLife = life;
+        gameController = GameObject.Find("GameController");
+    }
+
+    private void Update()
+    {
+        life -= Time.deltaTime;
+        if (life <= 0f) Destroy(gameObject);
+    }
+
+    private void OnDestroy()
+    {
+        if(gameObject.tag == "red")
+        {
+            gameController.GetComponent<GameManager>().hasRed = false;
+        }
+        else if(gameObject.tag == "last")
+        {
+            gameController.GetComponent<GameManager>().lastDisappeared = true;
+        }
     }
 }

@@ -6,7 +6,7 @@ using UnityEngine.UI;
 public class MoleSpawner : MonoBehaviour
 {
     public GameObject molePrefab;
-    private Text getReadyText;
+    private GameObject getReadyText;
     private float timeLeft;
 
     // indices the mole should turn red
@@ -24,7 +24,7 @@ public class MoleSpawner : MonoBehaviour
     private void Awake()
     {
         timeLeft = getReadyTime;
-        getReadyText = GameObject.Find("getReadyText").GetComponent<Text>();
+        getReadyText = GameObject.Find("getReadyText");
         spawnPoints = new Transform[GameObject.Find("Spawn Points").transform.childCount];
         for (int i = 0; i < spawnPoints.Length; i++)
         {
@@ -67,6 +67,12 @@ public class MoleSpawner : MonoBehaviour
             if (redMoleSet.Contains(totalMoleNum))
             {
                 mole.GetComponent<Renderer>().material = redMaterial;
+                mole.tag = "red";
+                GameObject.Find("GameController").GetComponent<GameManager>().hasRed = true;
+            }
+            if (totalMoleNum == 0)
+            {
+                mole.tag = "last";
             }
         }
         else
@@ -79,7 +85,13 @@ public class MoleSpawner : MonoBehaviour
     private void Update()
     {
         timeLeft -= Time.deltaTime;
-        if (timeLeft <= 0) GameObject.Find("getReadyText").SetActive(false);
-        else getReadyText.text = "Get Ready : " + ((int)timeLeft + 1).ToString();
+        if (timeLeft <= 0)
+        {
+            getReadyText.SetActive(false);
+        }
+        else
+        {
+            getReadyText.GetComponent<Text>().text = "Get Ready : " + ((int)timeLeft + 1).ToString();
+        }
     }
 }
